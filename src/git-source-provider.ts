@@ -203,15 +203,6 @@ export async function getSource(settings: IGitSourceSettings): Promise<void> {
       await authHelper.configureGlobalAuth()
       core.endGroup()
 
-      // Clean
-      core.info(`Cleaning any previous state for submodules`)
-      if (settings.clean) {
-        core.startGroup('Reset and clean submodules')
-        await git.submoduleReset(settings.nestedSubmodules)
-        await git.submoduleClean(settings.nestedSubmodules)
-        core.endGroup()
-      }
-
       // Checkout submodules
       core.startGroup('Fetching submodules')
       await git.submoduleSync(settings.nestedSubmodules)

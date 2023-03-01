@@ -9467,6 +9467,12 @@ function prepareExistingDirectory(git, repositoryPath, repositoryUrl, clean, ref
                         remove = true;
                     }
                     core.endGroup();
+                    // Clean
+                    core.info(`Cleaning any previous state for submodules`);
+                    core.startGroup('Reset and clean submodules');
+                    yield git.submoduleReset(true);
+                    yield git.submoduleClean(true);
+                    core.endGroup();
                     if (remove) {
                         core.warning(`Unable to clean or reset the repository. The repository will be recreated instead.`);
                     }
@@ -32026,14 +32032,6 @@ function getSource(settings) {
                 core.startGroup('Setting up auth for fetching submodules');
                 yield authHelper.configureGlobalAuth();
                 core.endGroup();
-                // Clean
-                core.info(`Cleaning any previous state for submodules`);
-                if (settings.clean) {
-                    core.startGroup('Reset and clean submodules');
-                    yield git.submoduleReset(settings.nestedSubmodules);
-                    yield git.submoduleClean(settings.nestedSubmodules);
-                    core.endGroup();
-                }
                 // Checkout submodules
                 core.startGroup('Fetching submodules');
                 yield git.submoduleSync(settings.nestedSubmodules);

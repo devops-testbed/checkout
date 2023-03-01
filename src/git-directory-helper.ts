@@ -94,6 +94,13 @@ export async function prepareExistingDirectory(
         }
         core.endGroup()
 
+        // Clean
+        core.info(`Cleaning any previous state for submodules`)
+        core.startGroup('Reset and clean submodules')
+        await git.submoduleReset(true)
+        await git.submoduleClean(true)
+        core.endGroup()
+
         if (remove) {
           core.warning(
             `Unable to clean or reset the repository. The repository will be recreated instead.`
