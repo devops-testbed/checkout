@@ -32069,6 +32069,7 @@ exports.getSource = getSource;
 function cleanup(repositoryPath) {
     return __awaiter(this, void 0, void 0, function* () {
         // Repo exists?
+        core.info("cleanup: " + repositoryPath + "");
         if (!repositoryPath ||
             !fsHelper.fileExistsSync(path.join(repositoryPath, '.git', 'config'))) {
             return;

@@ -252,6 +252,7 @@ export async function getSource(settings: IGitSourceSettings): Promise<void> {
 
 export async function cleanup(repositoryPath: string): Promise<void> {
   // Repo exists?
+  core.info("cleanup: " + repositoryPath + "")
   if (
     !repositoryPath ||
     !fsHelper.fileExistsSync(path.join(repositoryPath, '.git', 'config'))
